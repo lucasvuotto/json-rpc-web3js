@@ -5,6 +5,11 @@ const BN = require('bignumber.js');
 const fs = require('fs');
 const path = require('path');
 
+const rskj_host = process.env.RSKJ_HOST || "127.0.0.1";
+const rskj_port = process.env.RSKJ_PORT || 4444;
+const rskj_proto = process.env.RSKJ_PROTO || "http";
+const rskj_endpoint = `${rskj_proto}://${rskj_host}:${rskj_port}`;
+
 let libs = [
   {
     libName: 'web3.js',
@@ -38,7 +43,7 @@ libs.forEach(({
     let web3;
 
     before(async () => {
-      let lib = new libClass('http://127.0.0.1:4444', null, { transactionConfirmationBlocks: 1 });
+      let lib = new libClass(rskj_endpoint, null, { transactionConfirmationBlocks: 1 });
       web3 = libInit(lib);
 
       web3.evm = {

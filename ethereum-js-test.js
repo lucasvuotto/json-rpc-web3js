@@ -26,6 +26,12 @@ function getLibrary(provider) {
   return library;
 }
 */
+
+const rskj_host = process.env.RSKJ_HOST || "127.0.0.1";
+const rskj_port = process.env.RSKJ_PORT || 4444;
+const rskj_proto = process.env.RSKJ_PROTO || "http";
+const rskj_endpoint = `${rskj_proto}://${rskj_host}:${rskj_port}`;
+
 describe(`Rskj ethers.js Smoke Tests`, function () {
   this.timeout(10000);
 
@@ -39,16 +45,15 @@ describe(`Rskj ethers.js Smoke Tests`, function () {
   let web3Provider;
   before(async () => {
 
-    let url = "http://127.0.0.1:4444";
-    provider = /*getLibrary(*/new ethers.providers.StaticJsonRpcProvider(url)/*)*/;
+    provider = /*getLibrary(*/new ethers.providers.StaticJsonRpcProvider(rskj_endpoint)/*)*/;
     const signer = provider.getSigner();
-    web3 = new Web3('http://127.0.0.1:4444', null, {
+    web3 = new Web3(rskj_endpoint, null, {
       transactionConfirmationBlocks: 1
     });
     web3.evm = {
       mine: () => web3.currentProvider.send('evm_mine')
     };
-    /* let currentProvider = new Web3.providers.HttpProvider('http://localhost:4444');
+    /* let currentProvider = new Web3.providers.HttpProvider(rskj_endpoint);
      web3Provider = new ethers.providers.Web3Provider(currentProvider);*/
   });
 

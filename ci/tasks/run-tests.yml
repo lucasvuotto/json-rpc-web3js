@@ -34,4 +34,9 @@ run:
       exit 1
     fi
 
-    npm test
+    rc=0
+    npm test || rc=$?
+    if [ $rc -ne 0 ]; then
+      cat ./results/mocha/Test-Results.xml
+      exit $rc
+    fi

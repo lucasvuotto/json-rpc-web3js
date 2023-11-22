@@ -1,4 +1,4 @@
-FROM node:14-buster-slim
+FROM node:18.18.0-buster-slim
 
 RUN apt-get update && apt-get install -yqq --no-install-recommends \
     build-essential ca-certificates git netcat-openbsd python3
